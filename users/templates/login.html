@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Tizimga kirish{% endblock %}
+
+{% block content %}
+    <div style="max-width: 400px; margin: auto;">
+        <h2>Tizimga kirish</h2>
+        <form method="post" style="display: flex; flex-direction: column; gap: 15px;">
+            {% csrf_token %}
+            
+            {{ form.non_field_errors }}
+
+            {% for field in form %}
+                <div>
+                    <label style="display: block; margin-bottom: 5px;">{{ field.label }}</label>
+                    <div style="width: 100%;">
+                        {{ field }}
+                    </div>
+                    {% if field.errors %}
+                        <small style="color: red;">{{ field.errors.0 }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Kirish</button>
+        </form>
+        <p style="margin-top: 20px;">
+            Profilingiz yo'qmi? <br>
+            <a href="{% url 'seller_signup' %}"> Sotuvchi sifatida ro'yxatdan o'ting</a><br >
+            <a href="{% url 'buyer_signup' %}"> Xaridor sifatida ro'yxatdan o'ting</a>
+        </p>
+    </div>
+    
+    <style>
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+    </style>
+{% endblock %}

@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+
+sixth/
+.venv/
+venv/
+env/
+
+
+db.sqlite3
+*.sqlite3
+media/
+staticfiles/
+collectstatic/
+
+# Environment
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+
+
+# OS
+Thumbs.db
+.DS_Store
+
+
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Migrations cache
+*.tmp
