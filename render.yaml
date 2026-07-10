@@ -5,24 +5,17 @@ services:
     plan: free
     buildCommand: |
       pip install -r requirements.txt
-      python manage.py migrate
+      python manage.py migrate --noinput
       python manage.py collectstatic --noinput
     startCommand: gunicorn config.wsgi:application
     envVars:
       - key: DEBUG
         value: false
       - key: SECRET_KEY
-        fromDatabase:
-          name: marketplace-db
-          property: secretKey
-      - key: USE_POSTGRES
-        value: true
+        scope: build
+        value: django-insecure-^xn6!94o$#ygvy8q&dk6m_-a3t-g8&-7g84=#tj#rva%!@u6m7
       - key: DATABASE_URL
-        fromDatabase:
-          name: marketplace-db
-          property: connectionString
-
-databases:
-  - name: marketplace-db
-    plan: free
-    version: 15
+        scope: build
+        value: postgresql://neondb_owner:npg_HXgkveAsa30r@ep-empty-river-aspt6m7o-pooler.c-4.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - key: ALLOWED_HOSTS
+        value: "*.onrender.com,localhost"
