@@ -94,20 +94,6 @@ http://127.0.0.1:8000/
 - `ALLOWED_HOSTS = ["*"]`
 - `DEBUG = True`
 
-## Tavsiya etiladigan `.env` sozlamalari
-
-Hozirgi kodda `settings.py` bevosita `.env` faylni o'qimaydi. Agar loyihani productionga tayyorlamoqchi bo'lsangiz, quyidagi o'zgaruvchilarni `.env` ko'rinishida ishlatish tavsiya etiladi:
-
-- `SECRET_KEY`
-- `DEBUG`
-- `ALLOWED_HOSTS`
-- `DATABASE_NAME`
-- `DATABASE_USER`
-- `DATABASE_PASSWORD`
-- `DATABASE_HOST`
-- `DATABASE_PORT`
-
-
 ## Litsenziya
 
 Ushbu loyiha o'rganish uchun tayyorlangan.
