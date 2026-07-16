@@ -2,6 +2,8 @@
 
 Django asosida yozilgan ko'p funksiyali marketplace loyihasi. Loyiha xaridor va sotuvchi rollarini qo'llab-quvvatlaydi: mahsulot qo'shish, mahsulotlarni ko'rish, saqlash, buyurtma berish, karta/hisob boshqaruvi va profil sozlamalari mavjud.
 
+https://marketplace-g37t.onrender.com/
+
 ## Asosiy imkoniyatlar
 
 - Foydalanuvchi ro'yxatdan o'tishi va tizimga kirishi
