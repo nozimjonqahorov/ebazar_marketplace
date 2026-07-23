@@ -11,6 +11,7 @@ from .forms import CreateOrderForm
 from django.db.models import Sum
 from django.contrib import messages
 from django.db import transaction
+from .tasks import send_order_status_email
 
 class SellerDashboardView(SellerRequiredMixin, View):
     def get(self, request):
@@ -101,7 +102,9 @@ class CreateOrderView(LoginRequiredMixin, View):
                     status='new'
                 )
 
-                
+                # Email notification task - backgroundda ishlaydi
+                send_order_status_email.delay(order.id, 'new')
+
                 product.quantity -= quantity
                 if product.quantity == 0:
                     product.is_active = False
@@ -138,6 +141,9 @@ class CompleteOrderView(LoginRequiredMixin, View):
                 order.status = 'completed'
                 order.save()
 
+                # Email notification task - backgroundda ishlaydi
+                send_order_status_email.delay(order.id, 'completed')
+
                 messages.success(request, f" Buyurtma yakunlandi! {order.total_price} so'm hisobingizga o'tdi.")
         except Exception as e:
             messages.error(request, f"Xatolik: {str(e)}")
@@ -155,6 +161,10 @@ class AcceptOrderView(LoginRequiredMixin, View):
 
         order.status = 'accepted'
         order.save()
+
+        # Email notification task - backgroundda ishlaydi
+        send_order_status_email.delay(order.id, 'accepted')
+
         messages.success(request, f" Buyurtma qabul qilindi! Xaridor {order.product.title} yetkazilishini kutmoqda.")
         return redirect('seller_dashboard')
 
@@ -190,6 +200,9 @@ class CancelOrderView(LoginRequiredMixin, View):
 
                     order.status = 'canceled'
                     order.save()
+
+                    # Email notification task - backgroundda ishlaydi
+                    send_order_status_email.delay(order.id, 'canceled')
 
                     if request.user == order.buyer:
                         messages.warning(request, f" Buyurtma bekor qilindi! ")
