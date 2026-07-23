@@ -1,26 +1,14 @@
 from celery import shared_task
 from django.core.mail import send_mail
 from django.conf import settings
-
+from orders.models import Order
 
 @shared_task
 def send_order_status_email(order_id, new_status):
     """
     Buyurtma statusi o'zgarganda foydalanuvchiga email yuborish.
-    
-    Nima uchun kerak:
-    - Foydalanuvchilarga buyurtma holati haqida avtomatik xabar berish
-    - Asosiy jarayonni sekinlamasdi (email yuborish uzoq vaqt olishi mumkin)
-    - Backgroundda ishlaydi, foydalanuvchi kutmaydi
-    
-    Qanday ishlaydi:
-    1. Task RabbitMQ ga yuboriladi
-    2. Celery worker taskni qabul qiladi
-    3. Backgroundda email yuboriladi
-    4. Xatolik bo'lsa qayta urinadi
     """
-    from orders.models import Order
-    
+
     try:
         order = Order.objects.get(id=order_id)
         

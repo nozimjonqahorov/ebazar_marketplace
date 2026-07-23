@@ -102,7 +102,7 @@ class CreateOrderView(LoginRequiredMixin, View):
                     status='new'
                 )
 
-                # Email notification task - backgroundda ishlaydi
+                
                 send_order_status_email.delay(order.id, 'new')
 
                 product.quantity -= quantity
@@ -141,7 +141,7 @@ class CompleteOrderView(LoginRequiredMixin, View):
                 order.status = 'completed'
                 order.save()
 
-                # Email notification task - backgroundda ishlaydi
+                
                 send_order_status_email.delay(order.id, 'completed')
 
                 messages.success(request, f" Buyurtma yakunlandi! {order.total_price} so'm hisobingizga o'tdi.")
@@ -162,7 +162,7 @@ class AcceptOrderView(LoginRequiredMixin, View):
         order.status = 'accepted'
         order.save()
 
-        # Email notification task - backgroundda ishlaydi
+        
         send_order_status_email.delay(order.id, 'accepted')
 
         messages.success(request, f" Buyurtma qabul qilindi! Xaridor {order.product.title} yetkazilishini kutmoqda.")
@@ -201,7 +201,7 @@ class CancelOrderView(LoginRequiredMixin, View):
                     order.status = 'canceled'
                     order.save()
 
-                    # Email notification task - backgroundda ishlaydi
+                  
                     send_order_status_email.delay(order.id, 'canceled')
 
                     if request.user == order.buyer:
